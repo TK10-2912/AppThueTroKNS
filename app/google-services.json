@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "679844872199",
+    "project_id": "appthuetro-c36fe",
+    "storage_bucket": "appthuetro-c36fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679844872199:android:26dca3625e6a355ecc6aa2",
+        "android_client_info": {
+          "package_name": "com.example.appthuetro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXNArNE94IwqgGZlkVMExY81QhDvKHwKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679844872199:android:16a952f4573ab9e8cc6aa2",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXNArNE94IwqgGZlkVMExY81QhDvKHwKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
