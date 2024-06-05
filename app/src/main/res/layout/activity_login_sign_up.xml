@@ -125,6 +125,9 @@
 
 
                         <!--   LOGIN      -->
+
+
+                        <!--    SIGN UP    -->
                         <LinearLayout
                             android:id="@+id/ll_formLogin"
 
@@ -133,28 +136,27 @@
                             android:layout_marginBottom="80dp"
 
                             android:gravity="center"
-                            android:orientation="vertical"
->
+                            android:orientation="vertical">
 
                             <com.google.android.material.textfield.TextInputLayout
-                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:counterMaxLength="35">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textInputEdt_getEmailLogin"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    app:counterMaxLength="35">
+                                    android:drawableLeft="@drawable/ic_baseline_email"
+                                    android:drawablePadding="5dp"
+                                    android:hint="Email"
+                                    android:inputType="textEmailAddress">
 
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/textInputEdt_getEmailLogin"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="textEmailAddress"
-                                        android:drawablePadding="5dp"
-                                        android:drawableLeft="@drawable/ic_baseline_email"
-                                        android:hint="Email">
+                                </com.google.android.material.textfield.TextInputEditText>
 
-                                    </com.google.android.material.textfield.TextInputEditText>
-
-                                </com.google.android.material.textfield.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -180,10 +182,11 @@
                                 android:id="@+id/txt_forgotPassword"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#686868"
                                 android:layout_gravity="right"
                                 android:layout_marginTop="10dp"
-                                android:text="Quên mật khẩu ?" />
+                                android:text="Quên mật khẩu ?"
+                                android:textColor="#686868" />
+
                             <Button
                                 android:id="@+id/btn_login"
                                 android:layout_width="match_parent"
@@ -191,13 +194,11 @@
                                 android:layout_marginTop="20dp"
                                 android:backgroundTint="#0A83E8"
                                 android:text="Đăng Nhập"
-                                android:textStyle="bold"
-                                android:textSize="15dp" />
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
-
-                        <!--    SIGN UP    -->
                         <LinearLayout
                             android:id="@+id/ll_formSignUp"
                             android:visibility="gone"
@@ -275,6 +276,77 @@
 
                                     android:inputType="textEmailAddress"
                                     android:hint="Email">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="10dp"
+
+                                app:counterMaxLength="35">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textInputEdt_CCCD"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:drawablePadding="5dp"
+                                    android:drawableLeft="@drawable/ic_baseline_idcard"
+
+                                    android:hint="Căn cước công dân">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="10dp"
+
+                                app:counterMaxLength="35">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textInputEdt_NgayCap"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:drawablePadding="5dp"
+                                    android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
+                                    android:hint="Chọn ngày cấp CMND/CCCD">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="10dp"
+
+                                app:counterMaxLength="35">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/textInputEdt_NoiCap"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:drawablePadding="5dp"
+                                    android:drawableLeft="@drawable/ic_baseline_address"
+
+                                    android:hint="Nơi cấp">
 
                                 </com.google.android.material.textfield.TextInputEditText>
 

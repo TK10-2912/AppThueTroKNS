@@ -135,7 +135,7 @@ public class AddUpdateNote extends AppCompatActivity {
                 Note note = new Note(noteID,firebaseUser.getUid(), noteTitle, noteContent,currDateTime,
                         backgroundColor);
 
-                myRef.child("notes").child(firebaseUser.getUid()).child(noteID).setValue(note)
+                myRef.child("notes").child(noteID).setValue(note)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -193,7 +193,7 @@ public class AddUpdateNote extends AppCompatActivity {
                         backgroundColor);
 
 
-                myRef.child("notes").child(firebaseUser.getUid()).child(updateNoteID).setValue(updateNote)
+                myRef.child("notes").child(updateNoteID).setValue(updateNote)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

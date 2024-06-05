@@ -62,6 +62,7 @@ public class AddHouse extends AppCompatActivity {
     ImageView imgBack, img_addHouse, img_addServices,img_addUrlList;
     TextInputEditText textInputEdt_getTenNha;
     TextInputEditText textInputEdt_getSoTang;
+    TextInputEditText textInputEdt_getSodienthoai;
     TextInputEditText textInputEdt_getPhiThueNha;
     TextInputEditText textInputEdt_getMoTa;
     TextInputEditText textInputEdt_getDiaChi;
@@ -69,7 +70,7 @@ public class AddHouse extends AppCompatActivity {
     TextInputEditText textInputEdt_getGhiChu;
     TextInputEditText textInputEdt_getDientich;
 
-    String tenNha, soTang, phiThueNha, moTa, diaChi, baoTruocNgayChuyen, ghiChu,edtDienTich;
+    String tenNha, soTang,soDienthoai, phiThueNha, moTa, diaChi, baoTruocNgayChuyen, ghiChu,edtDienTich;
 
     TextView txt_selectThanhPho, txt_selectQuanHuyen;
     String strTinhThanhPho, strQuanHuyen;
@@ -188,6 +189,7 @@ public class AddHouse extends AppCompatActivity {
     private void executeAddHouse() {
         tenNha =  textInputEdt_getTenNha.getText().toString().trim();
         soTang =  textInputEdt_getSoTang.getText().toString().trim();
+        soDienthoai =  textInputEdt_getSodienthoai.getText().toString().trim();
         phiThueNha =  textInputEdt_getPhiThueNha.getText().toString().trim();
         moTa =  textInputEdt_getMoTa.getText().toString().trim();
         diaChi =  textInputEdt_getDiaChi.getText().toString().trim();
@@ -212,6 +214,15 @@ public class AddHouse extends AppCompatActivity {
         else if(Integer.parseInt(soTang) <=0)
         {
             Toast.makeText(this, "Error : Số tầng không hợp lệ !", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(soDienthoai.equals(""))
+        {
+            Toast.makeText(this, "Error : Điền số điện thoại !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(soDienthoai.length() <=0 ||soDienthoai.length()>11)
+        {
+            Toast.makeText(this, "Error : Số điện thoại không hợp lệ !", Toast.LENGTH_SHORT).show();
             return;
         }
         else if(diaChi.equals(""))
@@ -260,12 +271,12 @@ public class AddHouse extends AppCompatActivity {
 
         String houseId = "house_" + currentDateAndTime + "_" + firebaseUser.getUid();
 
-        Houses houses = new Houses(houseId, tenNha, soTang, phiThueNha, moTa, diaChi, strTinhThanhPho,
+        Houses houses = new Houses(houseId, tenNha, soTang,soDienthoai, phiThueNha, moTa, diaChi, strTinhThanhPho,
                 strQuanHuyen, checkedServiceList, strGioMoCua,strGioDongCua, baoTruocNgayChuyen,
                 ghiChu,edtDienTich,"Chưa có",imageUrlList);
 
-        // myRef.child("houses").child(firebaseUser.getUid()).child(strTinhThanhPho).child(houseId).setValue(houses);
         myRef.child("houses").child(houseId).setValue(houses);
+//        myRef.child("houses").child(strTinhThanhPho).child(houseId).setValue(houses);
 
         Toast.makeText(this, "Thêm nhà Thành Công !", Toast.LENGTH_SHORT).show();
 
@@ -376,7 +387,7 @@ public class AddHouse extends AppCompatActivity {
             }
         };
 
-        Query query = myRef.child("services").child(firebaseUser.getUid());
+        Query query = myRef.child("services");
         query.addListenerForSingleValueEvent(valueEventListener);
     }
 
@@ -549,6 +560,7 @@ public class AddHouse extends AppCompatActivity {
 
         textInputEdt_getTenNha              = findViewById(R.id.textInputEdt_getTenNha);
         textInputEdt_getSoTang              = findViewById(R.id.textInputEdt_getSoTang);
+        textInputEdt_getSodienthoai              = findViewById(R.id.textInputEdt_getSodienthoai);
         textInputEdt_getPhiThueNha          = findViewById(R.id.textInputEdt_getPhiThueNha);
         textInputEdt_getMoTa                = findViewById(R.id.textInputEdt_getMoTa);
         textInputEdt_getDiaChi              = findViewById(R.id.textInputEdt_getDiaChi);

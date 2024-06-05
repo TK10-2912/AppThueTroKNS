@@ -36,10 +36,17 @@ public class AdapterJoinRoom extends RecyclerView.Adapter<AdapterJoinRoom.Holder
     @Override
     public void onBindViewHolder(@NonNull AdapterJoinRoom.HolderJoinRoom holder, int position) {
         JoinRoom joinRoom = joinRoomList.get(position);
-
+        if(joinRoom.getStatus().equals("Duyệt"))
+        {
+            holder.tvStatusRoom.setText("Đã cho thuê");
+            holder.tvStatusRoom.setBackgroundResource(R.drawable.border_hetphong);
+        }
+        else{
+            holder.tvStatusRoom.setText("Còn phòng");
+            holder.tvStatusRoom.setBackgroundResource(R.drawable.border_conphong);
+        }
         context.getInformationOfJoinedRoom(joinRoom, holder.txt_joinRoomName,
-                holder.txt_joinRoomFloor, holder.txt_joinRoomFee);
-
+                holder.txt_joinRoomFloor, holder.txt_joinRoomFee)   ;
         holder.cv_joinRoomItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +66,7 @@ public class AdapterJoinRoom extends RecyclerView.Adapter<AdapterJoinRoom.Holder
 
     public class HolderJoinRoom extends RecyclerView.ViewHolder {
         CardView cv_joinRoomItem;
-        TextView txt_joinRoomName, txt_joinRoomFloor, txt_joinRoomFee;
+        TextView txt_joinRoomName, txt_joinRoomFloor, txt_joinRoomFee,tvStatusRoom;
         public HolderJoinRoom(@NonNull View itemView) {
             super(itemView);
 
@@ -67,8 +74,7 @@ public class AdapterJoinRoom extends RecyclerView.Adapter<AdapterJoinRoom.Holder
             txt_joinRoomName = itemView.findViewById(R.id.txt_joinRoomName);
             txt_joinRoomFloor = itemView.findViewById(R.id.txt_joinRoomFloor);
             txt_joinRoomFee = itemView.findViewById(R.id.txt_joinRoomFee);
-
-
+            tvStatusRoom = itemView.findViewById(R.id.tvStatusRoom);
         }
     }
 }

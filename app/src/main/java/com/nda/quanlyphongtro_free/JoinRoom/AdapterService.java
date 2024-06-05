@@ -1,5 +1,6 @@
 package com.nda.quanlyphongtro_free.JoinRoom;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,7 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.HolderAd
     JoinedRoomDetail context;
     List<Service> serviceList;
 
-    public AdapterService(JoinedRoomDetail context, List<Service> serviceList) {
-        this.context = context;
+    public AdapterService(Context context, List<Service> serviceList) {
         this.serviceList = serviceList;
     }
 

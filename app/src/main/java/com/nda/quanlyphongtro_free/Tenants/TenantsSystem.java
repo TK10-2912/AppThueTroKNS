@@ -89,7 +89,7 @@ public class TenantsSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("tenants").child(firebaseUser.getUid());
+        Query query = myRef.child("tenants");
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
@@ -108,7 +108,7 @@ public class TenantsSystem extends AppCompatActivity {
         cv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myRef.child("tenants").child(firebaseUser.getUid()).child(tenants.getId()).removeValue();
+                myRef.child("tenants").child(tenants.getId()).removeValue();
 
                 displayTenants();
                 dialog.dismiss();

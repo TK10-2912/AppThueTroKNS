@@ -151,7 +151,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 ll_showHoaDon.setVisibility(View.GONE);
                 img_addHoaDon.setVisibility(View.GONE);
                 searchView_searchTenants.setVisibility(View.VISIBLE);
-                txt_bgColor1.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_bgColor1.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_bgColor2.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 txt_bgColor3.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
@@ -165,7 +165,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 ll_showHoaDon.setVisibility(View.GONE);
                 img_addHoaDon.setVisibility(View.GONE);
                 searchView_searchTenants.setVisibility(View.GONE);
-                txt_bgColor2.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_bgColor2.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_bgColor1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 txt_bgColor3.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
@@ -178,7 +178,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 ll_showRoomDetail.setVisibility(View.GONE);
                 ll_showTenants.setVisibility(View.GONE);
                 searchView_searchTenants.setVisibility(View.GONE);
-                txt_bgColor3.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_bgColor3.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_bgColor2.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 txt_bgColor1.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
@@ -258,7 +258,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                     }
 
                     // Check if current room has contract or not
-                    myRef.child("contracts").child(firebaseUser.getUid()).child(houses.gethId()).child(rooms.getId())
+                    myRef.child("contracts").child(houses.gethId()).child(rooms.getId())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -287,7 +287,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
-            Query query = myRef.child("rooms").child(firebaseUser.getUid())
+            Query query = myRef.child("rooms")
                     .child(houses.gethId()).child(rooms.getId()).child("serviceList");
             query.addListenerForSingleValueEvent(valueEventListener);
         } catch (Exception e)
@@ -452,7 +452,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                         camKetSoNguoiThue, fromDate, toDate, ngayBatDauTinhTien, kiThanhToanTienPhong,tienPhong,
                         tienCoc, serviceList );
 
-                myRef.child("contracts").child(firebaseUser.getUid()).child(houses.gethId()).child(rooms.getId()).setValue(contract);
+                myRef.child("contracts").child(houses.gethId()).child(rooms.getId()).setValue(contract);
 
                 Toast.makeText(RoomDetailSystem.this, "Thêm hợp đồng Thành Công !", Toast.LENGTH_SHORT).show();
 
@@ -621,7 +621,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
-            Query query = myRef.child("contracts").child(firebaseUser.getUid())
+            Query query = myRef.child("contracts")
                     .child(houses.gethId()).child(rooms.getId()).child("serviceList");
             query.addListenerForSingleValueEvent(valueEventListener);
         } catch (Exception e)
@@ -648,7 +648,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 };
-                Query query = myRef.child("contracts").child(firebaseUser.getUid())
+                Query query = myRef.child("contracts")
                         .child(houses.gethId()).child(rooms.getId());
                 query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -825,7 +825,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                         camKetSoNguoiThue, fromDate, toDate, ngayBatDauTinhTien, kiThanhToanTienPhong,tienPhong,
                         tienCoc, serviceList );
 
-                myRef.child("contracts").child(firebaseUser.getUid()).child(houses.gethId())
+                myRef.child("contracts").child(houses.gethId())
                         .child(rooms.getId()).setValue(contract);
 
                 Toast.makeText(RoomDetailSystem.this, "Sửa hợp đồng Thành Công !", Toast.LENGTH_SHORT).show();
@@ -882,7 +882,7 @@ public class RoomDetailSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("receipt").child(firebaseUser.getUid()).child(houses.gethId()).child(rooms.getId());
+        Query query = myRef.child("receipt").child(houses.gethId()).child(rooms.getId());
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
@@ -911,7 +911,7 @@ public class RoomDetailSystem extends AppCompatActivity {
         cv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myRef.child("receipt").child(firebaseUser.getUid()).child(houses.gethId()).child(rooms.getId())
+                myRef.child("receipt").child(houses.gethId()).child(rooms.getId())
                         .child(hoaDon.getId()).removeValue();
 
                 displayHoaDon();
@@ -971,7 +971,7 @@ public class RoomDetailSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("tenants").child(firebaseUser.getUid()).orderByChild("rentRoomId").equalTo(rooms.getId());
+        Query query = myRef.child("tenants").orderByChild("rentRoomId").equalTo(rooms.getId());
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
@@ -1000,7 +1000,7 @@ public class RoomDetailSystem extends AppCompatActivity {
         cv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myRef.child("tenants").child(firebaseUser.getUid()).child(tenants.getId()).removeValue();
+                myRef.child("tenants").child(tenants.getId()).removeValue();
 
                 displayTenants();
                 dialog.dismiss();
@@ -1129,7 +1129,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
-            Query query = myRef.child("rooms").child(firebaseUser.getUid())
+            Query query = myRef.child("rooms")
                     .child(houses.gethId()).child(rooms.getId()).child("serviceList");
             query.addListenerForSingleValueEvent(valueEventListener);
         } catch (Exception e)
@@ -1162,7 +1162,7 @@ public class RoomDetailSystem extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren())
                         {
                             Tenants tenants = dataSnapshot.getValue(Tenants.class);
-                            myRef.child("tenants").child(firebaseUser.getUid()).child(tenants.getId())
+                            myRef.child("tenants").child(tenants.getId())
                                     .removeValue();
                         }
 
@@ -1171,19 +1171,19 @@ public class RoomDetailSystem extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 };
-                Query query = myRef.child("tenants").child(firebaseUser.getUid())
+                Query query = myRef.child("tenants")
                         .orderByChild("rentRoomId").equalTo(rooms.getId());
                 query.addListenerForSingleValueEvent(valueEventListener);
 
 
 
-                myRef.child("contracts").child(firebaseUser.getUid()).child(houses.gethId())
+                myRef.child("contracts").child(houses.gethId())
                         .child(rooms.getId()).removeValue();
 
-                myRef.child("receipt").child(firebaseUser.getUid()).child(houses.gethId())
+                myRef.child("receipt").child(houses.gethId())
                         .child(rooms.getId()).removeValue();
 
-                myRef.child("rooms").child(firebaseUser.getUid()).child(houses.gethId())
+                myRef.child("rooms").child(houses.gethId())
                         .child(rooms.getId()).removeValue();
 
 

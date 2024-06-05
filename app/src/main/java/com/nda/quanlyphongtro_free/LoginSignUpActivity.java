@@ -1,5 +1,6 @@
 package com.nda.quanlyphongtro_free;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,12 +39,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.Tenants.AddTenant;
 import com.nda.quanlyphongtro_free.Model.Service;
+import com.nda.quanlyphongtro_free.Model.Tenants;
 import com.nda.quanlyphongtro_free.Model.Users;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,14 +57,14 @@ public class LoginSignUpActivity extends AppCompatActivity {
     TextInputEditText textInputEdt_getUname, textInputEdt_getUphonenumber, textInputEdt_getEmailSignUp,
                         textInputEdt_getPasswordSignUp, textInputEdt_getRetypePasswordSignUp;
 
-    TextInputEditText textInputEdt_getEmailLogin, textInputEdt_getPasswordLogin;
+    TextInputEditText textInputEdt_getEmailLogin, textInputEdt_getPasswordLogin,textInputEdt_CCCD,textInputEdt_NoiCap,textInputEdt_NgayCap;
 
     TextView txt_gotoLogin, txt_gotoSignUp, txt_forgotPassword, txt_underLineLogin,txt_underLineSignUp ;
     LinearLayout ll_formLogin, ll_formSignUp;
 
     Button btn_login, btn_signup;
 
-    private String email, password, retypePassword, message, uName, uPhoneNumber;
+    private String email, password, retypePassword, message, uName, uPhoneNumber,cccd,ngayCap,noiCap;
     private ProgressDialog progressDialog;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -115,7 +120,12 @@ public class LoginSignUpActivity extends AppCompatActivity {
                 onClickLogin();
             }
         });
-
+        textInputEdt_NgayCap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePicker(textInputEdt_NgayCap);
+            }
+        });
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,7 +147,11 @@ public class LoginSignUpActivity extends AppCompatActivity {
         password = textInputEdt_getPasswordSignUp.getText().toString().trim();
         retypePassword = textInputEdt_getRetypePasswordSignUp.getText().toString().trim();
 
-        if (uName.equals("") || uPhoneNumber.equals("") || email.equals("") || password.equals("") || retypePassword.equals(""))
+        cccd = textInputEdt_CCCD.getText().toString().trim();
+        ngayCap = textInputEdt_NgayCap.getText().toString().trim();
+        noiCap = textInputEdt_NoiCap.getText().toString().trim();
+
+        if (uName.equals("") || uPhoneNumber.equals("") || email.equals("") || password.equals("") || cccd.equals("")|| ngayCap.equals("")|| noiCap.equals(""))
         {
             Toast.makeText(this, "Error : Điền đủ các thông tin", Toast.LENGTH_SHORT).show();
             return;
@@ -158,7 +172,6 @@ public class LoginSignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "Error : Mật khẩu phải > 5 ký tự !", Toast.LENGTH_SHORT).show();
             return;
         }
-
         firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
@@ -175,14 +188,31 @@ public class LoginSignUpActivity extends AppCompatActivity {
                 {
                     Toast.makeText(LoginSignUpActivity.this, "Error : Đăng Kí Thất Bại !", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
         
     }
+    private void datePicker(TextView showPickTime)
+    {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
 
+
+        // Implement date picker to get user's choice date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(LoginSignUpActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int Myear, int Mmonth, int MdayOfMonth) {
+                String FinalDate = (MdayOfMonth + "/" + (Mmonth + 1) + "/" + (Myear) );
+
+                showPickTime.setText(FinalDate);
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
+    }
     private void startSignUp(String password)
     {
 
@@ -205,7 +235,6 @@ public class LoginSignUpActivity extends AppCompatActivity {
                             // Lấy thông tin của tài khoản vừa tạo
                             firebaseUser = firebaseAuth.getCurrentUser();
 
-
                             // Add information of USER to realtime firebase
                             Users users = new Users(
                                     firebaseUser.getUid(),
@@ -216,29 +245,30 @@ public class LoginSignUpActivity extends AppCompatActivity {
                                     "Thường",
                                     ""
                             );
+                            Tenants tenants = new Tenants(firebaseUser.getUid(),"","",uName,uPhoneNumber,"","",firebaseUser.getEmail(),"","",cccd,ngayCap,noiCap);
                             myRef.child("users").child(firebaseUser.getUid()).setValue(users);
-
+                            myRef.child("tenants").child(firebaseUser.getUid()).setValue(tenants);
                             // Get current Datetime
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-                            String currentDateAndTime = sdf.format(new Date());
+//                            String currentDateAndTime = sdf.format(new Date());
 
 
                             // Add information of SERVICE to realtime firebase
-                            Service service1 = new Service(1 + "_" + currentDateAndTime, "Điện", "3500", "Kwh", false);
-                            Service service2 = new Service(2 + "_" + currentDateAndTime, "Nước", "20000", "Tháng", false);
-                            Service service3 = new Service(3 + "_" + currentDateAndTime, "Wifi", "50000", "Tháng", false);
-                            Service service4 = new Service(4 + "_" + currentDateAndTime, "Bảo Vệ", "10000", "Tháng", false);
-                            Service service5 = new Service(5 + "_" + currentDateAndTime, "Giữ Xe", "120000", "Tháng", false);
-                            Service service6 = new Service(6 + "_" + currentDateAndTime, "Vệ Sinh Chung", "47000", "Tháng", false);
-                            Service service7 = new Service(7 + "_" + currentDateAndTime, "Rác", "6000", "Tháng", false);
-
-                            myRef.child("services").child(firebaseUser.getUid()).child("1_"+ currentDateAndTime).setValue(service1);
-                            myRef.child("services").child(firebaseUser.getUid()).child("2_"+ currentDateAndTime).setValue(service2);
-                            myRef.child("services").child(firebaseUser.getUid()).child("3_"+ currentDateAndTime).setValue(service3);
-                            myRef.child("services").child(firebaseUser.getUid()).child("4_"+ currentDateAndTime).setValue(service4);
-                            myRef.child("services").child(firebaseUser.getUid()).child("5_"+ currentDateAndTime).setValue(service5);
-                            myRef.child("services").child(firebaseUser.getUid()).child("6_"+ currentDateAndTime).setValue(service6);
-                            myRef.child("services").child(firebaseUser.getUid()).child("7_"+ currentDateAndTime).setValue(service7);
+//                            Service service1 = new Service(1 + "_" + currentDateAndTime, "Điện", "3500", "Kwh", false);
+//                            Service service2 = new Service(2 + "_" + currentDateAndTime, "Nước", "20000", "Tháng", false);
+//                            Service service3 = new Service(3 + "_" + currentDateAndTime, "Wifi", "50000", "Tháng", false);
+//                            Service service4 = new Service(4 + "_" + currentDateAndTime, "Bảo Vệ", "10000", "Tháng", false);
+//                            Service service5 = new Service(5 + "_" + currentDateAndTime, "Giữ Xe", "120000", "Tháng", false);
+//                            Service service6 = new Service(6 + "_" + currentDateAndTime, "Vệ Sinh Chung", "47000", "Tháng", false);
+//                            Service service7 = new Service(7 + "_" + currentDateAndTime, "Rác", "6000", "Tháng", false);
+//
+//                            myRef.child("services").child("1_"+ currentDateAndTime).setValue(service1);
+//                            myRef.child("services").child("2_"+ currentDateAndTime).setValue(service2);
+//                            myRef.child("services").child("3_"+ currentDateAndTime).setValue(service3);
+//                            myRef.child("services").child("4_"+ currentDateAndTime).setValue(service4);
+//                            myRef.child("services").child("5_"+ currentDateAndTime).setValue(service5);
+//                            myRef.child("services").child("6_"+ currentDateAndTime).setValue(service6);
+//                            myRef.child("services").child("7_"+ currentDateAndTime).setValue(service7);
 
                             dialogSignUpSuccess();
                         }
@@ -353,7 +383,8 @@ public class LoginSignUpActivity extends AppCompatActivity {
                                         startActivity(new Intent(LoginSignUpActivity.this, MainActivity.class));
                                         finishAffinity();
                                     } else {
-                                        // giao diện trang ngoài
+                                        startActivity(new Intent(LoginSignUpActivity.this, MainHomeActivity.class));
+                                        finishAffinity();
                                     }
                                 }
                                 @Override
@@ -429,7 +460,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
 
     private void isLogin()
     {
-        txt_underLineLogin.setBackgroundColor(Color.parseColor("#0A83E8"));
+        txt_underLineLogin.setBackgroundColor(Color.parseColor("#22b14c"));
         txt_gotoLogin.setTextColor(Color.parseColor("#1E1E1E"));
 
         txt_underLineSignUp.setBackgroundColor((Color.parseColor("#FFFFFF")));
@@ -440,7 +471,7 @@ public class LoginSignUpActivity extends AppCompatActivity {
     }
     private void isSignUp()
     {
-        txt_underLineSignUp.setBackgroundColor(Color.parseColor("#0A83E8"));
+        txt_underLineSignUp.setBackgroundColor(Color.parseColor("#22b14c"));
         txt_gotoSignUp.setTextColor(Color.parseColor("#1E1E1E"));
 
         txt_underLineLogin.setBackgroundColor((Color.parseColor("#FFFFFF")));
@@ -480,6 +511,10 @@ public class LoginSignUpActivity extends AppCompatActivity {
         textInputEdt_getEmailSignUp            = findViewById(R.id.textInputEdt_getEmailSignUp);
         textInputEdt_getPasswordSignUp         = findViewById(R.id.textInputEdt_getPasswordSignUp);
         textInputEdt_getRetypePasswordSignUp   = findViewById(R.id.textInputEdt_getRetypePasswordSignUp);
+
+        textInputEdt_CCCD   = findViewById(R.id.textInputEdt_CCCD);
+        textInputEdt_NgayCap   = findViewById(R.id.textInputEdt_NgayCap);
+        textInputEdt_NoiCap   = findViewById(R.id.textInputEdt_NoiCap);
 
     }
 }

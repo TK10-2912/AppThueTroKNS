@@ -164,7 +164,7 @@ public class ServicesSystem extends AppCompatActivity {
 
                 Service updateService = new Service(service.getId(), serviceName, servicePrice, serviceUnit, service.isDelete());
 
-                myRef.child("services").child(firebaseUser.getUid()).child(String.valueOf(service.getId())).setValue(updateService);
+                myRef.child("services").child(String.valueOf(service.getId())).setValue(updateService);
 
                 displayServices();
                 dialog_update.dismiss();
@@ -187,7 +187,7 @@ public class ServicesSystem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                myRef.child("services").child(firebaseUser.getUid()).child(serviceId).removeValue();
+                myRef.child("services").child(serviceId).removeValue();
 
                 displayServices();
                 dialog_delete.dismiss();
@@ -248,7 +248,7 @@ public class ServicesSystem extends AppCompatActivity {
 
                 Service service = new Service(servicesId, serviceName, servicePrice, serviceUnit, true);
 
-                myRef.child("services").child(firebaseUser.getUid()).child(servicesId).setValue(service);
+                myRef.child("services").child(servicesId).setValue(service);
 
                 displayServices();
                 dialog.dismiss();
@@ -344,7 +344,7 @@ public class ServicesSystem extends AppCompatActivity {
             }
         };
 
-        Query query = myRef.child("services").child(firebaseUser.getUid());
+        Query query = myRef.child("services");
         query.addListenerForSingleValueEvent(valueEventListener);
     }
 

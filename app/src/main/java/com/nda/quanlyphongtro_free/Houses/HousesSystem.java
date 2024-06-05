@@ -2,11 +2,13 @@ package com.nda.quanlyphongtro_free.Houses;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,8 +27,10 @@ import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.R;
 
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class HousesSystem extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -53,7 +57,7 @@ public class HousesSystem extends AppCompatActivity {
         setUpRCV();
     }
     private void setUpRCV() {
-        adapterHouses = new AdapterHouses(HousesSystem.this, housesList);
+        adapterHouses = new AdapterHouses(HousesSystem.this, housesList,false);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
 
@@ -111,7 +115,45 @@ public class HousesSystem extends AppCompatActivity {
         query.addListenerForSingleValueEvent(valueEventListener);
 
     }
+    public static String removeDiacritics(String str) {
+        // Normalize the string to NFD form (Normalization Form D)
+        String normalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        // Use regex to remove diacritical marks
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalizedString).replaceAll("");
+    }
+    private void searchHouses(String searchText) {
+        housesList.clear();
+        Query queryByName = database.getReference("houses");
+//                .orderByChild("hTinhThanhPho");
+//                .startAt(searchText.toLowerCase())
+//                .endAt(searchText.toLowerCase() + "\uf8ff");
 
+        queryByName.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("Main", "Query result:");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Houses houses = snapshot.getValue(Houses.class);
+                    if (houses != null) {
+                        String houseName = removeDiacritics(houses.gethTinhThanhPho().toLowerCase());
+                        Log.d("Main", "House name: " + houseName);
+                        if (houseName.contains(removeDiacritics(searchText.toLowerCase()))) {
+                            if (!housesList.contains(houses)) {
+                                housesList.add(houses);
+                            }
+                        }
+                    }
+                }
+                adapterHouses.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Main", "Query cancelled:", databaseError.toException());
+            }
+        });
+    }
 
     private void initUI() {
         imgBack             =  findViewById(R.id.imgBack);
@@ -122,7 +164,19 @@ public class HousesSystem extends AppCompatActivity {
         rcv_houses     = findViewById(R.id.rcv_houses);
 
         shimmer_view_container = findViewById(R.id.shimmer_view_container);
+        searchView_houses.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("Main","name: " + newText );
+                searchHouses(newText);
+                return true;
+            }
+        });
     }
 
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Houses implements Parcelable {
     private String hId;
-    private String hName, hFloorsNumber, hFee, hDescription, hAddress, hTinhThanhPho,
-            hQuanHuyen,hOpenTime, hCloseTime, hBaoSoNgayChuyen, hNote,hDienTich,hNguoiThue;
+    public String hName, hFloorsNumber, hFee, hDescription, hAddress, hTinhThanhPho,
+            hQuanHuyen,hOpenTime, hCloseTime, hBaoSoNgayChuyen, hNote,hDienTich,hNguoiThue,hPhone;
 
     private List<Service> serviceList;
     private List<String> hImageUrlList;
@@ -19,12 +19,13 @@ public class Houses implements Parcelable {
 
 
 
-    public Houses(String hId, String hName, String hFloorsNumber, String hFee, String hDescription,
+    public Houses(String hId, String hName, String hFloorsNumber,String hPhone, String hFee, String hDescription,
                   String hAddress, String hTinhThanhPho, String hQuanHuyen, List<Service> serviceList,
                   String hOpenTime, String hCloseTime, String hBaoSoNgayChuyen, String hNote, String hDienTich, String hNguoiThue,List<String> imageUrlList) {
         this.hId = hId;
         this.hName = hName;
         this.hFloorsNumber = hFloorsNumber;
+        this.hPhone = hPhone;
         this.hFee = hFee;
         this.hDescription = hDescription;
         this.hAddress = hAddress;
@@ -45,6 +46,7 @@ public class Houses implements Parcelable {
         hId = in.readString();
         hName = in.readString();
         hFloorsNumber = in.readString();
+        hPhone = in.readString();
         hFee = in.readString();
         hDescription = in.readString();
         hAddress = in.readString();
@@ -87,9 +89,15 @@ public class Houses implements Parcelable {
     public String gethFloorsNumber() {
         return hFloorsNumber;
     }
+    public String gethPhone() {
+        return hPhone;
+    }
 
     public void sethFloorsNumber(String hFloorsNumber) {
         this.hFloorsNumber = hFloorsNumber;
+    }
+    public void sethPhone(String hPhone) {
+        this.hPhone = hPhone;
     }
 
     public String gethFee() {
@@ -200,6 +208,7 @@ public class Houses implements Parcelable {
         parcel.writeString(hId);
         parcel.writeString(hName);
         parcel.writeString(hFloorsNumber);
+        parcel.writeString(hPhone);
         parcel.writeString(hFee);
         parcel.writeString(hDescription);
         parcel.writeString(hAddress);

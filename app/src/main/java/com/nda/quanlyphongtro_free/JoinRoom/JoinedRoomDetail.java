@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,10 +28,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +50,9 @@ import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.RoomDetai
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.Tenants.AddTenant;
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.Tenants.UpdateTenant;
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.UpdateRoom.UpdateRoom;
+import com.nda.quanlyphongtro_free.LoginSignUpActivity;
 import com.nda.quanlyphongtro_free.MainActivity;
+import com.nda.quanlyphongtro_free.MainHomeActivity;
 import com.nda.quanlyphongtro_free.Model.Contract;
 import com.nda.quanlyphongtro_free.Model.HoaDon;
 import com.nda.quanlyphongtro_free.Model.Houses;
@@ -54,6 +60,8 @@ import com.nda.quanlyphongtro_free.Model.JoinRoom;
 import com.nda.quanlyphongtro_free.Model.Rooms;
 import com.nda.quanlyphongtro_free.Model.Service;
 import com.nda.quanlyphongtro_free.Model.Tenants;
+import com.nda.quanlyphongtro_free.Model.Users;
+import com.nda.quanlyphongtro_free.Note.AddUpdateNote;
 import com.nda.quanlyphongtro_free.R;
 
 import java.text.DecimalFormat;
@@ -72,32 +80,27 @@ public class JoinedRoomDetail extends AppCompatActivity {
     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
 
-    ImageView imgBack;
+    ImageView imgBack,img_huy,img_duyet;
     JoinRoom joinRoom;
     String ownerUserId,joinedHouseId, joinedRoomId;
 
-    TextView txt_joinedRoomName;
+    TextView txt_joinedRoomName,txt_hoTen,txt_soDienThoai,txt_cccd,txt_email,txt_noiCap;
 
-    CardView cv_contact;
-
-
-    LinearLayout  ll_chiTietPhong, ll_showRoomDetail, ll_hoaDon,ll_showHoaDon, ll_optionRooms;
-    TextView txt_bgColor2, txt_bgColor3;
+    LinearLayout ll_chiTietPhong, ll_showRoomDetail, ll_optionRooms,ll_danhSachTenants,ll_showTenants;
+    TextView txt_bgColor2, txt_bgColor1;
 
     TextView txt_roomFee, txt_area, txt_floorNumber, txt_numberOfBedRooms, txt_numberOfLivingRooms,
             txt_limitTenants, txt_deposits;
     TextView txt_genderMale, txt_genderFemale, txt_genderOther;
     TextView txt_description, txt_noteForTenants, txt_roomHouseID;
 
-    Button btn_deleteRoom;
-
+    LinearLayout lnUpdate;
     List<Service> serviceList = new ArrayList<>();
     AdapterService adapterService;
     RecyclerView rcv_servicesJoinedRoom;
-
-    List<HoaDon> hoaDonList = new ArrayList<>();
-    RecyclerView rcv_hoaDon;
-    com.nda.quanlyphongtro_free.JoinRoom.AdapterHoaDon adapterHoaDon;
+    Tenants tenants = new Tenants();
+    Houses house = new Houses();
+    Rooms room= new Rooms();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,6 @@ public class JoinedRoomDetail extends AppCompatActivity {
 
     }
 
-
     private void init() {
         joinRoom = getIntent().getParcelableExtra("Data_JoinedRoom_Parcelable");
 
@@ -118,55 +120,52 @@ public class JoinedRoomDetail extends AppCompatActivity {
         joinedHouseId = joinRoom.getHouseId();
         joinedRoomId = joinRoom.getRoomId();
 
+        getRoom();
+        getHouse();
+        getTenant();
         displayDataOfJoinedRoomDetail();
-
-        displayHoaDon();
+        displayTenant();
 
         ll_chiTietPhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ll_showRoomDetail.setVisibility(View.VISIBLE);
-                ll_showHoaDon.setVisibility(View.GONE);
+                ll_showTenants.setVisibility(View.GONE);
 
-                txt_bgColor2.setBackgroundColor(Color.parseColor("#4CAF50"));
-                txt_bgColor3.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                txt_bgColor2.setBackgroundColor(Color.parseColor("#0A83E8"));
+                txt_bgColor1.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
         });
-        ll_hoaDon.setOnClickListener(new View.OnClickListener() {
+        ll_danhSachTenants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ll_showHoaDon.setVisibility(View.VISIBLE);
+                getTenant();
+                displayTenant();
                 ll_showRoomDetail.setVisibility(View.GONE);
+                ll_showTenants.setVisibility(View.VISIBLE);
 
-                txt_bgColor3.setBackgroundColor(Color.parseColor("#4CAF50"));
                 txt_bgColor2.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                txt_bgColor1.setBackgroundColor(Color.parseColor("#0A83E8"));
             }
         });
-
-
-        btn_deleteRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogDeleteRoom();
-            }
-        });
-
-        cv_contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                executeContract();
-            }
-        });
-
-
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToJoinRoomSystem();
             }
         });
-
-
+        img_huy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateJoinRoom(false);
+            }
+        });
+        img_duyet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateJoinRoom(true);
+            }
+        });
     }
     /***************************
      *
@@ -175,168 +174,88 @@ public class JoinedRoomDetail extends AppCompatActivity {
      *
      *
      *************************** */
-    private void executeContract() {
-        // Get services first
-        serviceList.clear();
-        try {
-            ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    {
-                        Service service = dataSnapshot.getValue(Service.class);
-
-                        serviceList.add(service);
-                    }
-
-                    // Check if current room has contract or not
-                    myRef.child("contracts").child(ownerUserId).child(joinedHouseId).child(joinedRoomId)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Contract contract = snapshot.getValue(Contract.class);
-
-                                    if (snapshot.getValue() == null)
-                                    {
-                                        // Dont have Contract
-                                        Toast.makeText(JoinedRoomDetail.this, "Warning : Phòng chưa có hợp đồng !",
-                                                Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    else {
-                                        // Contract already existed
-                                        bottomSheetContract(contract);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            };
-            Query query = myRef.child("rooms").child(ownerUserId)
-                    .child(joinedHouseId).child(joinedRoomId).child("serviceList");
-            query.addListenerForSingleValueEvent(valueEventListener);
-        } catch (Exception e)
-        {
-            backToJoinRoomSystem();
-
-            Toast.makeText(this, "Warning : Kiểm tra đường truyền Internet !", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void bottomSheetContract(Contract contract)
-    {
-        View view = getLayoutInflater().inflate(R.layout.bottomsheet_contract,null);
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(JoinedRoomDetail.this);
-        bottomSheetDialog.setContentView(view);
-
-        ImageView img_editContract;
-
-        TextView txt_houseName, txt_roomName, txt_thoiHan, txt_daiDienNguoiThue,
-                txt_ngayTinhTien,txt_kiThanhToan, txt_roomFee, txt_deposits,
-                txt_camKetSoNguoiThue;
-
-        CardView cv_closeBottomSheet;
-
-        RecyclerView rcv_servicesContract;
-
-        img_editContract = view.findViewById(R.id.img_editContract);
-        txt_houseName = view.findViewById(R.id.txt_houseName);
-        txt_roomName = view.findViewById(R.id.txt_roomName);
-        txt_thoiHan = view.findViewById(R.id.txt_thoiHan);
-        txt_daiDienNguoiThue = view.findViewById(R.id.txt_daiDienNguoiThue);
-        txt_ngayTinhTien = view.findViewById(R.id.txt_ngayTinhTien);
-        txt_kiThanhToan = view.findViewById(R.id.txt_kiThanhToan);
-        txt_roomFee = view.findViewById(R.id.txt_roomFee);
-        txt_deposits = view.findViewById(R.id.txt_deposits);
-        txt_camKetSoNguoiThue = view.findViewById(R.id.txt_camKetSoNguoiThue);
-
-        cv_closeBottomSheet = view.findViewById(R.id.cv_closeBottomSheet);
-
-        rcv_servicesContract = view.findViewById(R.id.rcv_servicesContract);
-        List<Service> serviceListContract = new ArrayList<>();
-
-        img_editContract.setVisibility(View.GONE);
-        txt_houseName.setText(contract.getRentHouse());
-        txt_roomName.setText(contract.getRentRoom());
-        txt_thoiHan.setText("Thời hạn : " + contract.getFromDate() + " đến " + contract.getToDate());
-        txt_daiDienNguoiThue.setText("Đại diện : " + contract.getDaiDienNguoiThue());
-        txt_ngayTinhTien.setText(contract.getNgayBatDauTinhTien());
-        txt_kiThanhToan.setText(contract.getKyThanhToanTienPhong());
-
-        /**
-         * Format cost lấy về từ firebase
-         * theo định dạng money
-         * */
-        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-        formatter.applyPattern("#,###,###,###");
-        Double cost = Double.parseDouble(contract.getTienPhong());
-        txt_roomFee.setText(formatter.format(cost) + " đ");
-        Double cost2 = Double.parseDouble(contract.getTienCoc());
-        txt_deposits.setText(formatter.format(cost2) + " đ");
-
-        txt_camKetSoNguoiThue.setText(contract.getCamKetNguoiThue());
-
-
-        try {
-            ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                    {
-                        Service service = dataSnapshot.getValue(Service.class);
-
-                        serviceListContract.add(service);
-                    }
-
-                    adapterService = new AdapterService(JoinedRoomDetail.this, serviceListContract);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                            RecyclerView.HORIZONTAL,false);
-                    rcv_servicesContract.setLayoutManager(linearLayoutManager);
-                    rcv_servicesContract.setAdapter(adapterService);
-
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            };
-
-            Query query = myRef.child("contracts").child(ownerUserId)
-                    .child(joinedHouseId).child(joinedRoomId).child("serviceList");
-            query.addListenerForSingleValueEvent(valueEventListener);
-        } catch (Exception e)
-        {
-            backToJoinRoomSystem();
-            Toast.makeText(this, "Warning : Kiểm tra đường truyền Internet !", Toast.LENGTH_SHORT).show();
-
-        }
-
-
-
-        cv_closeBottomSheet.setOnClickListener(new View.OnClickListener() {
+    private void getHouse(){
+        DatabaseReference  query = myRef.child("houses").child(joinedHouseId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    house = dataSnapshot.getValue(Houses.class);
+                } else {
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-        bottomSheetDialog.show();
-    }
 
-    /***************************
-     *
-     *
-     * (Related) Detail of Joined Room
-     *
-     *
-     *************************** */
+    }
+    private void getRoom(){
+        DatabaseReference  query = myRef.child("rooms").child(joinedHouseId).child(joinedRoomId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    room = dataSnapshot.getValue(Rooms.class);
+                } else {
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
+    private void getTenant(){
+        DatabaseReference  query = myRef.child("tenants").child(ownerUserId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    tenants = dataSnapshot.getValue(Tenants.class);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+    private void updateJoinRoom(Boolean isDuyet){
+        if(isDuyet == true){
+            JoinRoom joinRoomUpdate = new JoinRoom(joinRoom.getjId(), ownerUserId, joinedHouseId, joinedRoomId,"Duyệt");
+            myRef.child("joinRooms").child(joinRoom.getjId()).setValue(joinRoomUpdate);
+            updateTenantWithRoom();
+            Toast.makeText(this, "Duyệt thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(JoinedRoomDetail.this, JoinRoomSystem.class);
+            startActivity(intent);
+        }
+        else{
+            JoinRoom joinRoomUpdate = new JoinRoom(joinRoom.getjId(), ownerUserId, joinedHouseId, joinedRoomId,"Huỷ");
+            myRef.child("joinRooms").child(joinRoom.getjId()).setValue(joinRoomUpdate);
+            Toast.makeText(this, "Hủy duyệt thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(JoinedRoomDetail.this, JoinRoomSystem.class);
+            startActivity(intent);
+        }
+
+    }
+    private void updateTenantWithRoom(){
+        getTenant();
+        if(tenants.getId() != null){
+            tenants.settRentRoom(room.getrName());
+            tenants.settRentHouse(house.gethName());
+            tenants.setRentHouseId(joinedHouseId);
+            tenants.setRentRoomId(joinedRoomId);
+            myRef.child("tenants").child(ownerUserId).setValue(tenants);
+        }
+
+    }
+    private void displayTenant(){
+        txt_hoTen.setText(tenants.gettName());
+        txt_email.setText(tenants.gettEmail());
+        txt_cccd.setText(tenants.gettSoCMND());
+        txt_noiCap.setText(tenants.gettNoiCapCMND());
+        txt_soDienThoai.setText(tenants.gettPhoneNumber());
+    }
     private void displayDataOfJoinedRoomDetail() {
         try {
             ValueEventListener valueEventListener = new ValueEventListener() {
@@ -363,6 +282,11 @@ public class JoinedRoomDetail extends AppCompatActivity {
                     txt_noteForTenants.setText(rooms.getrNoteToTenant());
 
 
+                    if(joinRoom.getStatus().equals("Duyệt") || joinRoom.getStatus().equals("Hủy"))
+                    {
+                        lnUpdate.setVisibility(View.GONE);
+                    }
+                    else lnUpdate.setVisibility(View.VISIBLE);
                     String selectedGender = rooms.getrGender();
                     String[] splitGender = selectedGender.split(",");
                     for (int i = 0 ; i < splitGender.length; i ++)
@@ -383,15 +307,12 @@ public class JoinedRoomDetail extends AppCompatActivity {
 
                         }
                     }
-
-
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
             Query query = myRef.child("rooms")
-                    .child(ownerUserId)
                     .child(joinedHouseId)
                     .child(joinedRoomId);
             query.addListenerForSingleValueEvent(valueEventListener);
@@ -429,10 +350,8 @@ public class JoinedRoomDetail extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             };
-            Query query = myRef.child("rooms")
-                    .child(ownerUserId)
+            Query query = myRef.child("houses")
                     .child(joinedHouseId)
-                    .child(joinedRoomId)
                     .child("serviceList");
             query.addListenerForSingleValueEvent(valueEventListener);
         } catch (Exception e)
@@ -445,105 +364,30 @@ public class JoinedRoomDetail extends AppCompatActivity {
 
     }
 
-
-    private void dialogDeleteRoom() {
-        Dialog dialog = new Dialog(JoinedRoomDetail.this);
-        dialog.setContentView(R.layout.dialog_delete);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        CardView cv_delete = dialog.findViewById(R.id.cv_delete);
-        CardView cv_cancel = dialog.findViewById(R.id.cv_cancel);
-
-        cv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myRef.child("joinRooms").child(firebaseUser.getUid()).child(joinRoom.getjId()).removeValue();
-
-
-                dialog.dismiss();
-
-                backToJoinRoomSystem();
-            }
-        });
-
-        cv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-
-    /***************************
-     *
-     *
-     * (Related) Hoa Don
-     *
-     *
-     *************************** */
-    private void displayHoaDon() {
-        adapterHoaDon = new AdapterHoaDon(this,hoaDonList);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                RecyclerView.VERTICAL,false);
-        rcv_hoaDon.setLayoutManager(linearLayoutManager);
-        rcv_hoaDon.setAdapter(adapterHoaDon);
-
-        hoaDonList.clear();
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    HoaDon hoaDon = dataSnapshot.getValue(HoaDon.class);
-                    hoaDonList.add(0,hoaDon);
-                }
-
-                adapterHoaDon.notifyDataSetChanged();
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-        Query query = myRef.child("receipt").child(ownerUserId).child(joinedHouseId).child(joinedRoomId);
-        query.addListenerForSingleValueEvent(valueEventListener);
-
-    }
-
-
     private void backToJoinRoomSystem()
     {
         Intent intent = new Intent(JoinedRoomDetail.this, JoinRoomSystem.class);
-
         startActivity(intent);
 
         JoinedRoomDetail.this.finish();
 
     }
 
+
     private void initUI() {
         imgBack         =  findViewById(R.id.imgBack);
 
-        cv_contact      = findViewById(R.id.cv_contact);
-
         rcv_servicesJoinedRoom = findViewById(R.id.rcv_servicesJoinedRoom);
-        rcv_hoaDon = findViewById(R.id.rcv_hoaDon);
 
         txt_joinedRoomName        =  findViewById(R.id.txt_joinedRoomName);
         txt_roomHouseID     = findViewById(R.id.txt_roomHouseID);
 
         txt_bgColor2        =  findViewById(R.id.txt_bgColor2);
-        txt_bgColor3        = findViewById(R.id.txt_bgColor3);
+        txt_bgColor1        = findViewById(R.id.txt_bgColor1);
 
         ll_optionRooms      = findViewById(R.id.ll_optionRooms);
         ll_chiTietPhong     =  findViewById(R.id.ll_chiTietPhong);
-        ll_hoaDon           = findViewById(R.id.ll_hoaDon);
         ll_showRoomDetail   =  findViewById(R.id.ll_showRoomDetail);
-        ll_showHoaDon       = findViewById(R.id.ll_showHoaDon);
 
         txt_roomFee     =  findViewById(R.id.txt_roomFee);
         txt_area     =  findViewById(R.id.txt_area);
@@ -560,8 +404,19 @@ public class JoinedRoomDetail extends AppCompatActivity {
         txt_description     =  findViewById(R.id.txt_description);
         txt_noteForTenants     =  findViewById(R.id.txt_noteForTenants);
 
+        img_huy = findViewById(R.id.img_huy);
+        img_duyet = findViewById(R.id.img_duyet);
 
-        btn_deleteRoom = findViewById(R.id.btn_deleteRoom);
+        txt_hoTen = findViewById(R.id.txt_hoTen);
+        txt_soDienThoai = findViewById(R.id.txt_soDienThoai);
+        txt_cccd = findViewById(R.id.txt_cccd);
+        txt_email = findViewById(R.id.txt_email);
+        txt_noiCap = findViewById(R.id.txt_noiCap);
+        ll_danhSachTenants = findViewById(R.id.ll_danhSachTenants);
+        ll_showTenants = findViewById(R.id.ll_showTenants);
+
+        lnUpdate = findViewById(R.id.lnUpdate);
+
     }
 
 

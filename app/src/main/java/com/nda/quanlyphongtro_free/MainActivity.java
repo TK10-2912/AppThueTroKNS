@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nda.quanlyphongtro_free.Houses.HousesSystem;
 import com.nda.quanlyphongtro_free.JoinRoom.JoinRoomSystem;
 import com.nda.quanlyphongtro_free.Model.Houses;
+import com.nda.quanlyphongtro_free.Model.JoinRoom;
 import com.nda.quanlyphongtro_free.Model.Rooms;
 import com.nda.quanlyphongtro_free.Model.Service;
 import com.nda.quanlyphongtro_free.Model.Tenants;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-    CardView cvNhaTro, cvDichVu,cv_quanLyTenants, cv_note;
+    CardView cvNhaTro, cvDichVu,cv_quanLyTenants, cv_joinRoom;
 
     ImageView img_vipAccount, img_logout;
     TextView txt_userName,txt_totalHouse,txt_totalTenants,txt_totalServices,txt_logout;
@@ -95,13 +96,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cv_note.setOnClickListener(new View.OnClickListener() {
+//        cv_note.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, NoteManagement.class));
+//            }
+//        });
+
+        cv_joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NoteManagement.class));
+                startActivity(new Intent(MainActivity.this, JoinRoomSystem.class));
             }
         });
-
     }
 
 
@@ -109,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         cvNhaTro    =  findViewById(R.id.cvNhaTro);
         cvDichVu    =  findViewById(R.id.cvDichVu);
         cv_quanLyTenants    =  findViewById(R.id.cv_quanLyTenants);
-        cv_note = findViewById(R.id.cv_note);
+        cv_joinRoom = findViewById(R.id.cv_joinRoom);
 
         txt_userName = findViewById(R.id.txt_userName);
 
@@ -133,19 +140,12 @@ public class MainActivity extends AppCompatActivity {
                 Users users = snapshot.getValue(Users.class);
 
                 txt_userName.setText(users.getName());
-
-                if (users.getAccountType().equals("VIP"))
-                {
-                    img_vipAccount.setVisibility(View.VISIBLE);
-                } else {
-                    img_vipAccount.setVisibility(View.GONE);
-                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("users").child(firebaseUser.getUid());
+        Query query = myRef.child("users");
         query.addListenerForSingleValueEvent(valueEventListener);
 
         // Count number of houses
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query2 = myRef.child("houses").child(firebaseUser.getUid());
+        Query query2 = myRef.child("houses");
         query2.addListenerForSingleValueEvent(valueEventListener2);
 
         // Count number of tenants
@@ -182,11 +182,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 txt_totalTenants.setText("( "+ String.valueOf(tenantsList.size()) + " )");
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query3 = myRef.child("tenants").child(firebaseUser.getUid());
+        Query query3 = myRef.child("tenants");
         query3.addListenerForSingleValueEvent(valueEventListener3);
 
         // Count number of tenants
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query4 = myRef.child("services").child(firebaseUser.getUid());
+        Query query4 = myRef.child("services");
         query4.addListenerForSingleValueEvent(valueEventListener4);
 
 

@@ -51,7 +51,10 @@ public class AdapterUpdateService extends RecyclerView.Adapter<AdapterUpdateServ
          * */
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         formatter.applyPattern("#,###,###,###");
-        Double cost = Double.parseDouble(service.getPrice());
+        Double cost=0.0;
+        if(service.getPrice() != null){
+            cost = Double.parseDouble(service.getPrice());
+        }
         holder.txtServicesCost.setText(formatter.format(cost) + " đ/" + service.getUnit());
 
         // Check if the item is checked or not, if yes, check box

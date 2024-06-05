@@ -1,5 +1,6 @@
 package com.nda.quanlyphongtro_free.Houses.HouseDetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +11,38 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.RoomDetailSystem;
+import com.nda.quanlyphongtro_free.MainDetailHouseUserActivity;
 import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.Model.Rooms;
+import com.nda.quanlyphongtro_free.Model.Tenants;
 import com.nda.quanlyphongtro_free.R;
+import com.nda.quanlyphongtro_free.RoomUserDetailActivity;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.HolderRooms> {
-    HouseDetailSystem context;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef  = database.getReference();
+    Context context;
     List<Rooms> roomsList;
     Houses houses;
-
-    public AdapterRoom(HouseDetailSystem context, List<Rooms> roomsList, Houses houses) {
-        this.context = context;
+    Boolean isMember;
+    public AdapterRoom(Context context, List<Rooms> roomsList, Houses houses,Boolean isMember) {
         this.roomsList = roomsList;
         this.houses = houses;
+        this.context = context;
+        this.isMember = isMember;
     }
 
     @NonNull
@@ -44,10 +58,11 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.HolderRooms> {
         Rooms rooms = roomsList.get(position);
 
         holder.txt_roomName.setText(rooms.getrName());
-        // holder.txt_roomMembers.setText("Số người : 0/" + rooms.getrLimitTenants());
+        holder.txt_roomMembers.setText("Số người : 0/" + rooms.getrLimitTenants());
         holder.txt_roomFloor.setText("Tầng : " + rooms.getrFloorNumber());
 
-        context.countTenants(rooms, holder.txt_roomMembers);
+
+        countTenants(rooms, holder.txt_roomMembers);
         /**
          * Format cost lấy về từ firebase
          * theo định dạng money
@@ -60,14 +75,54 @@ public class AdapterRoom extends RecyclerView.Adapter<AdapterRoom.HolderRooms> {
         holder.cv_roomItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RoomDetailSystem.class);
+                if(isMember == false){
+                    Intent intent = new Intent(context, RoomDetailSystem.class);
 
-                intent.putExtra("Data_Room_Parcelable", rooms);
-                intent.putExtra("Data_RoomOfHouse_Parcelable", houses);
+                    intent.putExtra("Data_Room_Parcelable", rooms);
+                    intent.putExtra("Data_RoomOfHouse_Parcelable", houses);
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
+                }else{
+                    Intent intent = new Intent(context, RoomUserDetailActivity.class);
+
+                    intent.putExtra("Data_Room_Parcelable", rooms);
+                    intent.putExtra("Data_RoomOfHouse_Parcelable", houses);
+
+                    context.startActivity(intent);
+                }
             }
         });
+    }
+    public void countTenants(Rooms rooms, TextView txtShowNumTenantsWithLimit)
+    {
+        List<Tenants> tenantsList = new ArrayList<>();
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    Tenants tenants = dataSnapshot.getValue(Tenants.class);
+                    tenantsList.add(tenants);
+                }
+                if (Integer.parseInt(rooms.getrLimitTenants()) < tenantsList.size())
+                {
+                    txtShowNumTenantsWithLimit.setText("Số người : " + tenantsList.size() +
+                            "/" + rooms.getrLimitTenants() + " (Số lượng vượt giới hạn) ");
+                }
+                else {
+                    txtShowNumTenantsWithLimit.setText("Số người : " + tenantsList.size() + "/" + rooms.getrLimitTenants());
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        };
+        Query query = myRef.child("tenants").orderByChild("rentRoomId").equalTo(rooms.getId());
+        query.addListenerForSingleValueEvent(valueEventListener);
+
+
     }
 
     @Override

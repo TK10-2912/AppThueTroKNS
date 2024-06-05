@@ -66,6 +66,12 @@ public class Tenants implements Parcelable {
         return rentHouseId;
     }
 
+    public void setRentHouseId(String rentHouseId) {
+        this.rentHouseId = rentHouseId;
+    }
+    public void setRentRoomId(String rentRoomId) {
+        this.rentRoomId = rentRoomId;
+    }
 
     public String getRentRoomId() {
         return rentRoomId;
@@ -110,6 +116,7 @@ public class Tenants implements Parcelable {
     public void settEmail(String tEmail) {
         this.tEmail = tEmail;
     }
+
 
     public String gettDob() {
         return tDob;

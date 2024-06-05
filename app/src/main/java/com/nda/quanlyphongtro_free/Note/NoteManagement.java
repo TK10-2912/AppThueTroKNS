@@ -125,7 +125,7 @@ public class NoteManagement extends AppCompatActivity {
             }
         };
 
-        Query query = myRef.child("notes").child(firebaseUser.getUid());
+        Query query = myRef.child("notes");
         query.addListenerForSingleValueEvent(valueEventListener);
 
     }

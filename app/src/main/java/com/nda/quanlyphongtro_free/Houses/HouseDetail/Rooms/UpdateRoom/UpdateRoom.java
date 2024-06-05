@@ -201,7 +201,7 @@ public class UpdateRoom extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("houses").child(firebaseUser.getUid()).child(houses.gethId()).child("serviceList");
+        Query query = myRef.child("houses").child(houses.gethId()).child("serviceList");
         query.addListenerForSingleValueEvent(valueEventListener);
     }
 
@@ -283,7 +283,7 @@ public class UpdateRoom extends AppCompatActivity {
                 rArea, rLimitTenants, rDeposits, gender, checkedServiceList, rDescription, rNoteToTenants
                 );
 
-        myRef.child("rooms").child(firebaseUser.getUid()).child(houses.gethId())
+        myRef.child("rooms").child(houses.gethId())
                 .child(rooms.getId()).setValue(updateRoom);
 
         Toast.makeText(this, "Cập nhật phòng Thành Công !", Toast.LENGTH_SHORT).show();

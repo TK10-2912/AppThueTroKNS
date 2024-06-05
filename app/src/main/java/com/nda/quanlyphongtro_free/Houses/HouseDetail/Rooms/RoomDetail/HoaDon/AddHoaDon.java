@@ -173,7 +173,7 @@ public class AddHoaDon extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("rooms").child(firebaseUser.getUid())
+        Query query = myRef.child("rooms")
                 .child(houses.gethId()).child(rooms.getId()).child("serviceList");
         query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -299,7 +299,7 @@ public class AddHoaDon extends AppCompatActivity {
                 HoaDon hoaDon = new HoaDon(hoaDonId, hoaDonThang,rentHouse, rentRoom, ngayThanhToan
                         , hanThanhToan , roomFee, note, strSumServiceFee,noteRoomServices, daThanhToan );
 
-                myRef.child("receipt").child(firebaseUser.getUid()).child(houses.gethId())
+                myRef.child("receipt").child(houses.gethId())
                         .child(rooms.getId()).child(hoaDonId).setValue(hoaDon);
 
                 Toast.makeText(AddHoaDon.this, "Thêm phòng Thành Công !", Toast.LENGTH_SHORT).show();
@@ -323,7 +323,7 @@ public class AddHoaDon extends AppCompatActivity {
             public void onClick(View view) {
                 daThanhToan = true;
 
-                txt_daThanhToan.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_daThanhToan.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_chuaThanhToan.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 txt_daThanhToan.setTextColor(Color.parseColor("#FFFFFF"));
@@ -336,7 +336,7 @@ public class AddHoaDon extends AppCompatActivity {
             public void onClick(View view) {
                 daThanhToan = false;
 
-                txt_chuaThanhToan.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_chuaThanhToan.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_daThanhToan.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 txt_chuaThanhToan.setTextColor(Color.parseColor("#FFFFFF"));

@@ -147,7 +147,7 @@ public class AddTenant extends AppCompatActivity {
         Tenants tenants = new Tenants(tenantId, houses.gethId(), rooms.getId(), tName, tPhoneNumber, tRentHouse,
                 tRentRoom, tEmail, tDob, tNoiSinh,  tSoCMND,tNgayCapCMND, tNoiCapCMND );
 
-        myRef.child("tenants").child(firebaseUser.getUid()).child(tenantId).setValue(tenants);
+        myRef.child("tenants").child(tenantId).setValue(tenants);
 
         Toast.makeText(this, "Thêm người thuê Thành Công !", Toast.LENGTH_SHORT).show();
         backToRoomDetail();

@@ -3,6 +3,7 @@ package com.nda.quanlyphongtro_free.Houses.HouseDetail;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,10 +88,9 @@ public class HouseDetailSystem extends AppCompatActivity {
 
 
     private void setupRCV() {
-        roomAdapter = new AdapterRoom(this,roomsList, houses);
+        roomAdapter = new AdapterRoom(this,roomsList, houses,false);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),
-                RecyclerView.VERTICAL,false);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         rcv_rooms.setLayoutManager(linearLayoutManager);
         rcv_rooms.setAdapter(roomAdapter);
         displayRooms();
@@ -131,7 +131,7 @@ public class HouseDetailSystem extends AppCompatActivity {
                 ll_showDanhSachPhong.setVisibility(View.VISIBLE);
                 ll_showChiTietNha.setVisibility(View.GONE);
                 searchView_searchRoom.setVisibility(View.VISIBLE);
-                txt_bgColor1.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_bgColor1.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_bgColor2.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
             }
@@ -142,7 +142,7 @@ public class HouseDetailSystem extends AppCompatActivity {
                 ll_showChiTietNha.setVisibility(View.VISIBLE);
                 ll_showDanhSachPhong.setVisibility(View.GONE);
                 searchView_searchRoom.setVisibility(View.GONE);
-                txt_bgColor2.setBackgroundColor(Color.parseColor("#4CAF50"));
+                txt_bgColor2.setBackgroundColor(Color.parseColor("#0A83E8"));
                 txt_bgColor1.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
         });
@@ -191,7 +191,7 @@ public class HouseDetailSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("rooms").child(firebaseUser.getUid()).child(houses.gethId());
+        Query query = myRef.child("rooms").child(houses.gethId());
         query.addListenerForSingleValueEvent(valueEventListener);
 
 
@@ -327,7 +327,7 @@ public class HouseDetailSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("tenants").child(firebaseUser.getUid()).orderByChild("rentHouseId").equalTo(houses.gethId());
+        Query query = myRef.child("tenants").orderByChild("rentHouseId").equalTo(houses.gethId());
         query.addListenerForSingleValueEvent(valueEventListener);
     }
 
@@ -350,7 +350,7 @@ public class HouseDetailSystem extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren())
                         {
                             Tenants tenants = dataSnapshot.getValue(Tenants.class);
-                            myRef.child("tenants").child(firebaseUser.getUid()).child(tenants.getId())
+                            myRef.child("tenants").child(tenants.getId())
                                     .removeValue();
                         }
 
@@ -359,7 +359,7 @@ public class HouseDetailSystem extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 };
-                Query query = myRef.child("tenants").child(firebaseUser.getUid())
+                Query query = myRef.child("tenants")
                         .orderByChild("rentHouseId").equalTo(houses.gethId());
                 query.addListenerForSingleValueEvent(valueEventListener);
 
@@ -397,38 +397,8 @@ public class HouseDetailSystem extends AppCompatActivity {
      *
      *
      *************************** */
-    public void countTenants(Rooms rooms, TextView txtShowNumTenantsWithLimit)
-    {
-        List<Tenants> tenantsList = new ArrayList<>();
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    Tenants tenants = dataSnapshot.getValue(Tenants.class);
-                    tenantsList.add(tenants);
-                }
-                if (Integer.parseInt(rooms.getrLimitTenants()) < tenantsList.size())
-                {
-                    txtShowNumTenantsWithLimit.setText("Số người : " + tenantsList.size() +
-                            "/" + rooms.getrLimitTenants() + " (Số lượng vượt giới hạn) ");
-                }
-                else {
-                    txtShowNumTenantsWithLimit.setText("Số người : " + tenantsList.size() + "/" + rooms.getrLimitTenants());
-                }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-        Query query = myRef.child("tenants").child(firebaseUser.getUid()).orderByChild("rentRoomId").equalTo(rooms.getId());
-        query.addListenerForSingleValueEvent(valueEventListener);
 
 
-
-    }
 
 
 
@@ -474,7 +444,6 @@ public class HouseDetailSystem extends AppCompatActivity {
     private void backToHouseSystem() {
         startActivity(new Intent(HouseDetailSystem.this, HousesSystem.class));
         HouseDetailSystem.this.finish();
-
     }
     @Override
     public void onBackPressed() {

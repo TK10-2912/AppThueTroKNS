@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="7dp"
+    android:layout_margin="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,8 +10,7 @@
         android:id="@+id/cv_roomItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#E4E4E4"
-        app:cardCornerRadius="10dp">
+        android:backgroundTint="#E4E4E4">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -87,10 +86,6 @@
                     android:textSize="13dp"/>
 
             </LinearLayout>
-
-
-
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

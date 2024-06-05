@@ -7,14 +7,17 @@ import androidx.annotation.NonNull;
 
 public class JoinRoom implements Parcelable {
     private String jId;
-    private String ownerUserId, houseId,roomId;
+    private String ownerUserId, houseId,roomId,status;
 
     public JoinRoom(){}
-    public JoinRoom(String jId, String ownerUserId, String houseId, String roomId) {
+    public JoinRoom(String jId, String ownerUserId, String houseId, String roomId,String status) {
         this.jId = jId;
         this.ownerUserId = ownerUserId;
         this.houseId = houseId;
         this.roomId = roomId;
+        this.status = status;
+
+
     }
 
     protected JoinRoom(Parcel in) {
@@ -22,6 +25,7 @@ public class JoinRoom implements Parcelable {
         ownerUserId = in.readString();
         houseId = in.readString();
         roomId = in.readString();
+        status = in.readString();
     }
 
     public static final Creator<JoinRoom> CREATOR = new Creator<JoinRoom>() {
@@ -64,6 +68,13 @@ public class JoinRoom implements Parcelable {
     public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     @Override
     public int describeContents() {
@@ -76,5 +87,6 @@ public class JoinRoom implements Parcelable {
         parcel.writeString(ownerUserId);
         parcel.writeString(houseId);
         parcel.writeString(roomId);
+        parcel.writeString(status);
     }
 }

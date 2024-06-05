@@ -59,7 +59,7 @@ public class JoinRoomSystem extends AppCompatActivity {
 
     ShimmerFrameLayout shimmer_view_container;
 
-    ImageView imgBack, img_joinRoom;
+    ImageView imgBack;
    
     androidx.appcompat.widget.SearchView searchView_searchJoinedRoom;
 
@@ -96,98 +96,12 @@ public class JoinRoomSystem extends AppCompatActivity {
     private void init() {
         progressDialog.setMessage("Đang truy vấn !");
 
-        img_joinRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogJoinRoom();
-            }
-        });
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 backToMain();
             }
         });
-    }
-
-    private void dialogJoinRoom() {
-        Dialog dialog = new Dialog(JoinRoomSystem.this);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.dialog_join_room);
-
-        TextInputEditText textInputEdt_joinId = dialog.findViewById(R.id.textInputEdt_joinId);
-        Button btn_joinRoom = dialog.findViewById(R.id.btn_joinRoom);
-        Button btnCancel = dialog.findViewById(R.id.btnCancel);
-
-        btn_joinRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String joinRoomId = textInputEdt_joinId.getText().toString().trim();
-                if (joinRoomId.equals(""))
-                {
-                    Toast.makeText(JoinRoomSystem.this, "Error : Điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String[] splitJoinRoomId = joinRoomId.split("_splitHere_");
-                String houseId = splitJoinRoomId[0];
-                String roomId = splitJoinRoomId[1];
-                String ownerUserId = splitJoinRoomId[2];
-
-                if (firebaseUser.getUid().equals(ownerUserId))
-                {
-                    Toast.makeText(JoinRoomSystem.this, "Error : Không thể tham gia phòng của chính bạn", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Rooms room = snapshot.getValue(Rooms.class);
-                            if (room != null)
-                            {
-                                // House and room available in the system
-                                // then add some data (such as entered houseId, roomId, ownerUserId)
-                                // to current user
-                                Log.d("RDetailJoin", room.getId() + "\n" + room.getrName());
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-                                String currentDateAndTime = sdf.format(new Date());
-
-                                String joinRoomId = "joinRoom_" + currentDateAndTime + "_" + firebaseUser.getUid();
-
-                                JoinRoom joinRoom = new JoinRoom(joinRoomId, ownerUserId, houseId, roomId);
-
-                                // Add joinRoom to Database
-                                myRef.child("joinRooms").child(firebaseUser.getUid()).child(joinRoomId).setValue(joinRoom);
-
-                                displayJoinRoom();
-
-                                dialog.dismiss();
-                            }
-                            else {
-                                Toast.makeText(JoinRoomSystem.this, "Error : Phòng không tồn tại hoặc sai Mã Phòng", Toast.LENGTH_SHORT).show();
-                            }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                };
-                Query query = myRef.child("rooms").child(ownerUserId).child(houseId).child(roomId);
-                query.addListenerForSingleValueEvent(valueEventListener);
-
-
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
     }
 
     private void displayJoinRoom() {
@@ -206,7 +120,6 @@ public class JoinRoomSystem extends AppCompatActivity {
                 // When get data successfully, hide the shimmer and show all function field
                 searchView_searchJoinedRoom.setVisibility(View.VISIBLE);
                 rcv_joinedRooms.setVisibility(View.VISIBLE);
-                img_joinRoom.setVisibility(View.VISIBLE);
                 shimmer_view_container.setVisibility(View.GONE);
                 shimmer_view_container.stopShimmerAnimation();
             }
@@ -214,7 +127,7 @@ public class JoinRoomSystem extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         };
-        Query query = myRef.child("joinRooms").child(firebaseUser.getUid());
+        Query query = myRef.child("joinRooms");
         query.addListenerForSingleValueEvent(valueEventListener);
 
     }
@@ -242,7 +155,6 @@ public class JoinRoomSystem extends AppCompatActivity {
                 }
             };
             Query query = myRef.child("rooms")
-                    .child(joinRoom.getOwnerUserId())
                     .child(joinRoom.getHouseId())
                     .child(joinRoom.getRoomId());
             query.addListenerForSingleValueEvent(valueEventListener);
@@ -263,7 +175,6 @@ public class JoinRoomSystem extends AppCompatActivity {
         shimmer_view_container = findViewById(R.id.shimmer_view_container);
 
         imgBack         =  findViewById(R.id.imgBack);
-        img_joinRoom = findViewById(R.id.img_joinRoom);
 
         rcv_joinedRooms = findViewById(R.id.rcv_joinedRooms);
 

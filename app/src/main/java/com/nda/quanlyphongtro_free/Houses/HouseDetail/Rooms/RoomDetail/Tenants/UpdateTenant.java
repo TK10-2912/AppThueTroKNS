@@ -131,7 +131,7 @@ public class UpdateTenant extends AppCompatActivity {
         Tenants updateTenant = new Tenants(tenants.getId(), houses.gethId(), rooms.getId(), tName, tPhoneNumber, tRentHouse,
                 tRentRoom, tEmail, tDob, tNoiSinh,  tSoCMND,tNgayCapCMND, tNoiCapCMND );
 
-        myRef.child("tenants").child(firebaseUser.getUid()).child(tenants.getId()).setValue(updateTenant);
+        myRef.child("tenants").child(tenants.getId()).setValue(updateTenant);
 
         Toast.makeText(this, "Cập nhật Thành Công !", Toast.LENGTH_SHORT).show();
         backToRoomDetail();

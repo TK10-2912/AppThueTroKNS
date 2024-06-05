@@ -68,10 +68,10 @@ public class UpdateHouse extends AppCompatActivity {
     Houses houses;
 
     ImageView imgBack, img_addHouse, img_addServices,img_addUrlList;
-    TextInputEditText textInputEdt_getTenNha, textInputEdt_getSoTang, textInputEdt_getPhiThueNha,
+    TextInputEditText textInputEdt_getTenNha, textInputEdt_getSoTang,textInputEdt_getSodienthoai, textInputEdt_getPhiThueNha,
             textInputEdt_getMoTa, textInputEdt_getDiaChi, textInputEdt_getBaoTruocNgayChuyen,
             textInputEdt_getGhiChu,textInputEdt_getDientich;;
-    String tenNha, soTang, phiThueNha, moTa, diaChi, baoTruocNgayChuyen, ghiChu,edtDientich;
+    String tenNha, soTang,soDienthoai, phiThueNha, moTa, diaChi, baoTruocNgayChuyen, ghiChu,edtDientich;
 
     TextView txt_selectThanhPho, txt_selectQuanHuyen;
     String strTinhThanhPho, strQuanHuyen;
@@ -98,6 +98,7 @@ public class UpdateHouse extends AppCompatActivity {
 
         textInputEdt_getTenNha.setText(houses.gethName());
         textInputEdt_getSoTang.setText(houses.gethFloorsNumber());
+        textInputEdt_getSodienthoai.setText(houses.gethPhone());
 
         /**
          * Format cost lấy về từ firebase
@@ -171,6 +172,7 @@ public class UpdateHouse extends AppCompatActivity {
     private void executeAddHouse() {
         tenNha = textInputEdt_getTenNha.getText().toString().trim();
         soTang = textInputEdt_getSoTang.getText().toString().trim();
+        soDienthoai =  textInputEdt_getSodienthoai.getText().toString().trim();
         phiThueNha = textInputEdt_getPhiThueNha.getText().toString().trim();
         moTa = textInputEdt_getMoTa.getText().toString().trim();
         diaChi = textInputEdt_getDiaChi.getText().toString().trim();
@@ -191,7 +193,18 @@ public class UpdateHouse extends AppCompatActivity {
         } else if (Integer.parseInt(soTang) <= 0) {
             Toast.makeText(this, "Error : Số tầng không hợp lệ !", Toast.LENGTH_SHORT).show();
             return;
-        } else if (diaChi.equals("")) {
+        }
+        else if(soDienthoai.equals(""))
+        {
+            Toast.makeText(this, "Error : Điền số điện thoại !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(soDienthoai.length() <=0 ||soDienthoai.length()>11)
+        {
+            Toast.makeText(this, "Error : Số điện thoại không hợp lệ !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (diaChi.equals("")) {
             Toast.makeText(this, "Error : Điền địa Chỉ !", Toast.LENGTH_SHORT).show();
             return;
         } else if (strTinhThanhPho.equals("")) {
@@ -218,7 +231,7 @@ public class UpdateHouse extends AppCompatActivity {
             phiThueNha = phiThueNha.replaceAll(",", "");
 
 
-        Houses updateHouse = new Houses(houses.gethId(), tenNha, soTang, phiThueNha, moTa, diaChi, strTinhThanhPho,
+        Houses updateHouse = new Houses(houses.gethId(), tenNha, soTang,soDienthoai, phiThueNha, moTa, diaChi, strTinhThanhPho,
                 strQuanHuyen, checkedServiceList, strGioMoCua, strGioDongCua, baoTruocNgayChuyen,ghiChu,edtDientich,"Chua có",hImageUrlList);
 
         myRef.child("houses").child(houses.gethId()).setValue(updateHouse);
@@ -536,6 +549,7 @@ public class UpdateHouse extends AppCompatActivity {
 
         textInputEdt_getTenNha = findViewById(R.id.textInputEdt_getTenNha);
         textInputEdt_getSoTang = findViewById(R.id.textInputEdt_getSoTang);
+        textInputEdt_getSodienthoai = findViewById(R.id.textInputEdt_getSodienthoai);
         textInputEdt_getPhiThueNha = findViewById(R.id.textInputEdt_getPhiThueNha);
         textInputEdt_getMoTa = findViewById(R.id.textInputEdt_getMoTa);
         textInputEdt_getDiaChi = findViewById(R.id.textInputEdt_getDiaChi);
