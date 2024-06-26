@@ -1,0 +1,85 @@
+Title,Description,Additional Info
+"<h1 class=""title-head product-title"" itemprop=""name"">Máy Rửa Bát CANZY CZ-DWS128C16I</h1>",
+"<ul class=""product-info"">
+<li class=""product_sku"">
+<span>Mã sản phẩm: </span><span class=""sku_item f-normal"" itemprop=""sku"">CZ-DWS128C16I</span>
+</li>
+<li class=""product-inventory"" itemscope="""" itemtype=""http://schema.org/ItemAvailability"">
+<span>Tình trạng: </span><span class=""quantity_item f-normal"" itemprop=""supersededBy"">Còn hàng <em>(1)</em></span>
+</li>
+<li class=""product-type"">
+<span>Loại sản phẩm: </span><span class=""type_item f-normal"" itemprop=""model"">Máy rửa chén</span>
+</li>
+<li class=""product-vendor"" itemprop=""brand"" itemscope="""" itemtype=""http://schema.org/Organization"">
+<span>Hãng sản xuất: </span><span class=""vendor_item f-normal"" itemprop=""name"">Canzy</span>
+</li>
+</ul>",
+"<div class=""panel-body rte"">
+<p><span style=""font-size:16px;""><em><strong>Máy rửa bát Canzy CZ DWS128C16I </strong>là một trong những Model máy rửa chén gia đình mới nhất đầu năm 2023 của Canzy với những tính năng thông minh tiện lợi cùng với thiết kế trẻ trung khỏe khoán chắc chắn sẽ không làm người tiêu dùng thất vọng về những cải tiến sản phẩm, giúp việc sử dụng máy được hiệu quả tốt nhất, tiết kiệm thời gian, chị em phụ nữ có nhiều thời gian dành cho gia đình hơn.</em></span></p>
+<p><span style=""font-size:16px;""><em>Bạn đang tìm cho căn bếp của bạn những thiết bị tuyệt vời vậy thì hãy đến với CANZY chúng tôi là đại lí chính hãng, uy tín về các dòng thiết bị nhà bếp nhập khẩu. Chúng tôi luôn cảm kết bán các sản phẩm chính hãng, mang lại sự thoải mái và đẳng cấp cho không gian bếp nhà bạn.</em></span></p>
+<p><span style=""font-size:16px;""><em>Các bạn hãy cùng chúng tôi khám phá những thông tin và tính năng cụ thể về model này nhé.</em></span></p>
+<h2><span style=""font-size:16px;""><strong>THÔNG TIN MÁY RỬA BÁT CANZY CZ DWS128C16I</strong></span></h2>
+<ul>
+<li><span style=""font-size:16px;"">Tên sản phẩm: <strong>Máy rửa bát Canzy CZ DWS128C16I</strong></span></li>
+<li><span style=""font-size:16px;"">Kiểu máy: Máy rửa bát đứng âm tủ</span></li>
+<li><span style=""font-size:16px;"">Dung tích: 16 bộ bát đĩa</span></li>
+<li><span style=""font-size:16px;"">Số chương trình rửa: 8</span></li>
+<li><span style=""font-size:16px;"">Xuất xứ: INDONESIA</span></li></ul>
+<figure aria-describedby=""caption-attachment-34876"" id=""attachment_34876""><span style=""font-size:16px;""><img alt=""Máy Rửa Bát Canzy CZ DWS128C16I"" height=""600"" loading=""lazy"" sizes=""(max-width: 600px) 100vw, 600px"" src=""https://beptuhanoi.com/wp-content/uploads/Thiet-ke-chua-co-ten-6.png"" srcset=""https://beptuhanoi.com/wp-content/uploads/Thiet-ke-chua-co-ten-6.png 600w, https://beptuhanoi.com/wp-content/uploads/Thiet-ke-chua-co-ten-6-100x100.png 100w, https://beptuhanoi.com/wp-content/uploads/Thiet-ke-chua-co-ten-6-500x500.png 500w"" title=""Máy Rửa Bát Canzy CZ DWS128C16I 6"" width=""600""/></span>
+<figcaption id=""caption-attachment-34876""><span style=""font-size:16px;"">Máy Rửa Bát Canzy CZ DWS128C16I</span></figcaption>
+</figure>
+<p> </p>
+<h2><span style=""font-size:20px;""><span style=""color:#c0392b;""><strong>MÁY RỬA BÁT CANZY CZ DWS128C16I CÓ TỐT KHÔNG?</strong></span></span></h2>
+<h3><span style=""font-size:16px;""><strong>Máy rửa bát Canzy CZ DWS128C16I <em>được trang bị nhiều tính năng đăc biệt</em></strong></span></h3>
+<ul>
+<li><span style=""font-size:16px;"">3 Tầng Giá Cơ Động Có Giá Đỡ Xoong Nồi: Thiết kế này giúp bạn dễ dàng xếp nồi chảo vào máy.</span></li>
+<li><span style=""font-size:16px;"">Dung Tích 16 Bộ Bát Châu Âu: Máy có khả năng chứa đến 16 bộ bát đĩa theo tiêu chuẩn Châu Âu hoặc nhiều hơn theo cách xếp của Châu Á.</span></li>
+<li><span style=""font-size:16px;"">5 Tay Phun 3 Cánh 1 Trên, 1 Giữa, 1 Dưới Và 2 Tay Phun Bổ Trợ Phía Dưới: Hệ thống tay phun này giúp đảm bảo rửa sạch mọi góc và mảng bám trên bát đĩa.</span></li>
+<li><span style=""font-size:16px;"">Điều khiển cảm ứng Touch Control Hiển thị Led điện tử: Máy được điều khiển bằng cảm ứng và có màn hình LED hiển thị thông tin dễ dàng.</span></li>
+<li><span style=""font-size:16px;"">Công nghệ sấy nóng PTC: Công nghệ sấy nóng giúp làm khô bát đĩa nhanh chóng và diệt khuẩn lên đến 99,99%.</span></li>
+<li><span style=""font-size:16px;"">Công nghệ Fresh Air 48-72h: Giúp lưu trữ bát đĩa luôn khô ráo và sạch sẽ trong khoảng thời gian 48-72 giờ.</span></li>
+<li><span style=""font-size:16px;"">Nhiệt độ nước khoang rửa 75 Độ C: Nhiệt độ cao này giúp loại bỏ các vết dầu mỡ và mảng bám trên bát đĩa một cách hiệu quả.</span></li>
+<li><span style=""font-size:16px;"">8 Chương Trình Rửa: Máy có 8 chương trình rửa khác nhau để bạn có thể lựa chọn phù hợp với nhu cầu sử dụng.</span></li>
+<li><span style=""font-size:16px;"">Tự động báo lỗi và dừng khi rò rỉ nước: Máy được trang bị cảm biến để phát hiện và ngừng hoạt động khi có hiện tượng rò rỉ nước.</span></li>
+<li><span style=""font-size:16px;"">Điều chỉnh lên xuống giàn rửa giữa: Chức năng này giúp bạn dễ dàng sắp xếp các vật dụng cần rửa có kích thước khác nhau.</span></li>
+<li><span style=""font-size:16px;"">Các chức năng an toàn: Máy có các chức năng an toàn như tạm dừng, hẹn giờ rửa và khoá an toàn trẻ em.</span></li></ul>
+<p> </p>
+<p>        <img data-thumb=""original"" original-height=""986"" original-width=""1481"" src=""//bizweb.dktcdn.net/100/357/739/files/dws128c16i.png?v=1688626362369""/></p>
+<figure aria-describedby=""caption-attachment-34873"" id=""attachment_34873"">
+<figcaption id=""caption-attachment-34873""> </figcaption>
+</figure>
+<h2><span style=""color:#c0392b;""><span style=""font-size:20px;""><strong>CHƯƠNG TRÌNH RỬA CỦA MÁY RỬA BÁT CANZY CZ DWS128C16I</strong></span></span></h2>
+<h3><span style=""font-size:16px;""><strong>Máy rửa bát Canzy CZ DWS128C16I <em>với 8 chương trình rửa:</em></strong></span></h3>
+<ul>
+<li><span style=""font-size:16px;"">Chế độ rửa Intensive (Chuyên sâu): Chế độ này giúp rửa sạch các vết bẩn cứng đầu trên bát đĩa.</span></li>
+<li><span style=""font-size:16px;"">Chế độ rửa ECO (Tiết kiệm): Chế độ này giảm tiêu thụ nước và năng lượng, đồng thời vẫn đảm bảo hiệu quả rửa sạch.</span></li>
+<li><span style=""font-size:16px;"">Chế độ rửa Rapid (Nhanh): Chế độ này rửa nhanh chóng và hiệu quả trong thời gian ngắn.</span></li>
+<li><span style=""font-size:16px;"">Chế độ rửa Heavy (Nặng): Chế độ này phù hợp để rửa các vật dụng bát đĩa có độ bẩn nặng.</span></li>
+<li><span style=""font-size:16px;"">Chế độ rửa bán tải Half: Chế độ này giúp tiết kiệm nước và năng lượng khi chỉ rửa một phần của máy khi không đầy.</span></li>
+<li><span style=""font-size:16px;"">Chức năng lưu trữ (Storage): Máy sẽ bật quạt gió theo chu kỳ trong vòng 7 ngày để làm cho bát đĩa bên trong luôn khô ráo và diệt khuẩn.</span></li>
+<li><span style=""font-size:16px;"">Chức năng hẹn giờ (Booking): Bạn có thể đặt hẹn giờ để máy bắt đầu rửa trong khoảng thời gian tới, lên đến 24 giờ.</span></li>
+<li><span style=""font-size:16px;"">Chức năng Separate (Phân giàn rửa): Chức năng này giúp bạn điều chỉnh và phân chia giàn rửa để sắp xếp dễ dàng các vật dụng cần rửa có kích thước khác nhau.</span><img data-thumb=""original"" original-height=""986"" original-width=""1481"" src=""//bizweb.dktcdn.net/100/357/739/products/dws128c16i-4.png?v=1688626336897""/></li></ul>
+<figure aria-describedby=""caption-attachment-34872"" id=""attachment_34872"">
+<figcaption id=""caption-attachment-34872""> </figcaption>
+</figure>
+<h3><span style=""font-size:16px;""><strong>Máy rửa bát Canzy CZ DWS128C16I<em> với 3 chức năng tăng cường:</em></strong></span></h3>
+<ul>
+<li><span style=""font-size:16px;"">Khoá an toàn trẻ em (Child Lock): Chức năng này giúp khóa máy để tránh trẻ em vô tình hoặc ngẫu nhiên thay đổi cài đặt hoặc làm hoạt động máy trong quá trình rửa.</span></li>
+<li><span style=""font-size:16px;"">Khởi động và tạm dừng khi đang rửa: Bạn có thể khởi động hoặc tạm dừng máy trong quá trình rửa để thêm hoặc lấy ra bát đĩa một cách thuận tiện.</span></li>
+<li><span style=""font-size:16px;"">Chức năng tự động ngắt nguồn nước khi có rò rỉ, chế độ chống tràn Aqua Stop: Máy được trang bị chức năng tự động ngắt nguồn nước khi phát hiện rò rỉ, đảm bảo an toàn và ngăn chặn hậu quả xảy ra. Chế độ chống tràn Aqua Stop giúp ngăn chặn sự tràn nước nếu có sự cố xảy ra trong quá trình rửa.</span><img data-thumb=""original"" original-height=""986"" original-width=""1481"" src=""//bizweb.dktcdn.net/100/357/739/products/dws128c16i-1.png?v=1688626342973""/></li></ul>
+<figure aria-describedby=""caption-attachment-34871"" id=""attachment_34871"">
+<figcaption id=""caption-attachment-34871""> </figcaption>
+</figure>
+<h2><span style=""color:#c0392b;""><span style=""font-size:20px;""><strong>THÔNG SỐ KỸ THUẬT MÁY RỬA BÁT CANZY CZ DWS128C16I</strong></span></span></h2>
+<ul>
+<li><span style=""font-size:16px;"">Mức độ tiếng ồn: &lt;45Db</span></li>
+<li><span style=""font-size:16px;"">Điện áp: 220V~50Hz</span></li>
+<li><span style=""font-size:16px;"">Công suất: 1750W</span></li>
+<li><span style=""font-size:16px;"">Áp suất nước đầu vào 0.04-1.00MPa</span></li>
+<li><span style=""font-size:16px;"">Trọng lượng:47 kg</span></li>
+<li><span style=""font-size:16px;"">Kích thước sản phẩm đứng độc lập ( Cao x Sâu x Rộng): 805 x 600 x 600mm</span></li>
+<li><span style=""font-size:16px;"">Kích thước sản phẩm đứng độc lập khi tháo tấm mái ( Cao x Sâu x Rộng): 765 x 570 x 600mm</span></li>
+<li><span style=""font-size:16px;"">Kích thước âm tủ (Cao x Sâu x Rộng): 780-825 x 600 x 605</span></li></ul>
+<p> </p>
+<p><span style=""font-size:16px;""><img alt=""Máy Rửa Bát Canzy CZ DWS128C16I"" height=""374"" loading=""lazy"" sizes=""(max-width: 600px) 100vw, 600px"" src=""https://beptuhanoi.com/wp-content/uploads/may-rua-bat-canzy-dws128c16i-3.jpg"" srcset=""https://beptuhanoi.com/wp-content/uploads/may-rua-bat-canzy-dws128c16i-3.jpg 906w, https://beptuhanoi.com/wp-content/uploads/may-rua-bat-canzy-dws128c16i-3-768x479.jpg 768w, https://beptuhanoi.com/wp-content/uploads/may-rua-bat-canzy-dws128c16i-3-500x312.jpg 500w"" title=""Máy Rửa Bát Canzy CZ DWS128C16I 10"" width=""600""/></span></p>
+</div>"
