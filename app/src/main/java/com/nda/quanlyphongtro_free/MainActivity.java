@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,12 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nda.quanlyphongtro_free.Houses.HousesSystem;
 import com.nda.quanlyphongtro_free.JoinRoom.JoinRoomSystem;
 import com.nda.quanlyphongtro_free.Model.Houses;
-import com.nda.quanlyphongtro_free.Model.JoinRoom;
-import com.nda.quanlyphongtro_free.Model.Rooms;
 import com.nda.quanlyphongtro_free.Model.Service;
-import com.nda.quanlyphongtro_free.Model.Tenants;
-import com.nda.quanlyphongtro_free.Model.Users;
-import com.nda.quanlyphongtro_free.Note.NoteManagement;
 import com.nda.quanlyphongtro_free.Services.ServicesSystem;
 import com.nda.quanlyphongtro_free.Tenants.TenantsSystem;
 

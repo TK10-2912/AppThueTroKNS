@@ -1,20 +1,13 @@
 package com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.Tenants;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,24 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nda.quanlyphongtro_free.Houses.AddHouse.AddHouse;
-import com.nda.quanlyphongtro_free.Houses.HouseDetail.HouseDetailSystem;
-import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.AddRoom.AdapterAddService;
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.RoomDetailSystem;
-import com.nda.quanlyphongtro_free.Houses.HousesSystem;
 import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.Model.Rooms;
-import com.nda.quanlyphongtro_free.Model.Service;
-import com.nda.quanlyphongtro_free.Model.Tenants;
 import com.nda.quanlyphongtro_free.R;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AddTenant extends AppCompatActivity {

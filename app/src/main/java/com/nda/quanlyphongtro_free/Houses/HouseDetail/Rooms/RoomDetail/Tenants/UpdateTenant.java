@@ -20,13 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.nda.quanlyphongtro_free.Houses.HouseDetail.Rooms.RoomDetail.RoomDetailSystem;
 import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.Model.Rooms;
-import com.nda.quanlyphongtro_free.Model.Tenants;
 import com.nda.quanlyphongtro_free.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class UpdateTenant extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
