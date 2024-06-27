@@ -22,6 +22,11 @@ import com.nda.quanlyphongtro_free.Houses.HousesSystem;
 import com.nda.quanlyphongtro_free.JoinRoom.JoinRoomSystem;
 import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.Model.Service;
+<<<<<<< HEAD
+=======
+import com.nda.quanlyphongtro_free.Model.Tenants;
+import com.nda.quanlyphongtro_free.Model.Users;
+>>>>>>> origin/task-by-Nga
 import com.nda.quanlyphongtro_free.Services.ServicesSystem;
 import com.nda.quanlyphongtro_free.Tenants.TenantsSystem;
 
