@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.nda.quanlyphongtro_free.Model.Note;
 import com.nda.quanlyphongtro_free.R;
 
 import java.util.List;

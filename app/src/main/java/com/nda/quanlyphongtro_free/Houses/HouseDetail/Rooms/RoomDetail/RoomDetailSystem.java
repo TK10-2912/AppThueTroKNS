@@ -51,6 +51,7 @@ import com.nda.quanlyphongtro_free.Model.Houses;
 import com.nda.quanlyphongtro_free.Model.Rooms;
 import com.nda.quanlyphongtro_free.Model.Service;
 import com.nda.quanlyphongtro_free.R;
+import com.nda.quanlyphongtro_free.Model.Tenants;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
